@@ -1,0 +1,19 @@
+/*  
+    Funcao: Excel.CurrentWorkbook() aninhada com o valor de uma determinada planilha e célula (nomeada) 
+    para evitar o carregamento de uma consulta inteira na busca de um valor único.
+
+    Exemplo: Caminho Dinâmico => {[Name="Caminho"]}[Content][Column1]{0} (Célula nomeada como "Caminho")
+*/
+
+Source0 = Excel.CurrentWorkbook()
+            {[Name="Caminho"]}[Content][Column1]{0},
+
+Source = Csv.Document(
+              File.Contents(Source0),
+              [
+                Delimiter=",", 
+                Columns=6, 
+                Encoding=1252, 
+                QuoteStyle=QuoteStyle.None
+              ]
+),
