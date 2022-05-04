@@ -1,0 +1,36 @@
+let
+    /*
+        Script - exemplo - demonstrando como identificar e tratar de maneira dinâmica
+        novas e últimas colunas a direita.
+		
+		Por meio das funções: Table.ColumnNames + List.LastN(Table_ColumnNames, 1), 
+		obtemos o cabeçalho da última coluna e a tratamos.
+		
+    */
+
+    Fonte = Excel.Workbook(File.Contents("C:\Users\denni\OneDrive\Documentos\POWER BI\EAD - Minhas Planilhas\MCode\04 - Custom Columns\Get Last Column\Event Tickets Sold_Inicio_Ex.xlsx"), null, true),
+    
+    Table2_Table = Fonte{[Item="Table2",Kind="Table"]}[Data],
+    
+    // Função extraí uma lista com os nomes dos cabeçalhos. 
+    Table_ColumnNames = Table.ColumnNames(Table2_Table),
+    
+    // Retorna a última linha contendo o nome do último de maneira dinâmica.
+    UltimaColuna = List.LastN(Table_ColumnNames, 1){0},
+    
+    // Seleção de colunas com a variável que contém a última (nova) coluna de maneira dinâmica.
+    OutrasColunasRemovidas = Table.SelectColumns(Table2_Table,
+        {
+            "Location", 
+            UltimaColuna
+        }
+    ),
+    
+    // Alterando tipo de dados das colunas contendo a última coluna de maneira dinâmica.
+    TipoAlterado = Table.TransformColumnTypes(OutrasColunasRemovidas,{
+        {"Location", type text}, 
+        {UltimaColuna, Int64.Type}
+        }
+    )
+in
+    TipoAlterado
