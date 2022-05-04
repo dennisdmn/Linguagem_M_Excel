@@ -1,0 +1,7 @@
+Source = Excel.Workbook(Parameter1, null, true),
+/* 
+    Está variável busca a primeira Sheet de qq Workbook independente do nome e de quantas outras Sheets possuam.
+
+    Alteração: "= Source{[Item="2019-02-28",Kind="Sheet"]}[Data]" para = Source{{[Kind="Sheet"]}{0}}[Data]
+*/
+Primeira_Sheet = Source{{[Kind="Sheet"]}{0}}[Data]
