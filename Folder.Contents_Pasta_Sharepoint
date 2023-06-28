@@ -1,0 +1,9 @@
+
+// O link copiado terá uma estrutura semelhante a esta: "https://seu_sharepoint/sites/seu_site/Shared%20Documents/sua_pasta".
+// Agora você pode usar esse URL como caminho da pasta no Power Query. Para fazer isso, você pode usar a função Folder.Contents juntamente com o URL da pasta. Aqui está um exemplo de código:
+
+let
+    url = "https://seu_sharepoint/sites/seu_site/Shared%20Documents/sua_pasta",
+    pasta = Folder.Contents(url)
+in
+    pasta
